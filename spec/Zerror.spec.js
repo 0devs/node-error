@@ -20,7 +20,7 @@ describe('Zerror', () => {
     });
   });
 
-  describe('if pass firstparam', () => {
+  describe('if pass first param', () => {
     it('should set error code', () => {
       const err = new Zerror('SOME_CODE');
       expect(err.code).toEqual('SOME_CODE');
@@ -110,16 +110,4 @@ describe('Zerror', () => {
       expect(err.toString()).toMatch(/some message/);
     });
   });
-
-  // describe('test', () => {
-  //     it('test', () => {
-  //         const cause2 = new Zerror('DEEEEEP', 'deep code');
-  //         const _cause = new Zerror('TEST_CODE', cause2);
-  //         const err = new Zerror('WHAAAA', _cause);
-  //
-  //
-  //
-  //         // console.log(err instanceof err.constructor);
-  //     });
-  // })
 });

@@ -2,7 +2,8 @@
   "name": "@0devs/error",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/Zerror.js",
+  "files": ["src"],
   "scripts": {
     "test": "jest"
   },

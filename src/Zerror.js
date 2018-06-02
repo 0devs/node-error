@@ -9,18 +9,29 @@ class Zerror extends Error {
         this.CODES = Zerror.CODES;
 
         this.code = null;
-        this.cause = null;
         this.message = null;
+
+        this._cause = null;
 
         if (code) {
             this.code = code;
         }
 
         if (causeOrMessage instanceof Error) {
-            this.cause = causeOrMessage;
+            this._cause = causeOrMessage;
         } else if (causeOrMessage != null) {
             this.message = causeOrMessage;
         }
+
+        this.stack = this._prepareOwnStack();
+    }
+
+    cause() {
+        if (this._cause) {
+            return this._causeToString(this._cause);
+        }
+
+        return this._cause;
     }
 
     static is(err, code) {
@@ -34,12 +45,17 @@ class Zerror extends Error {
     }
 
     toString() {
-        let stack = this._clearStack(this.stack);
+        let stack = this.stack;
 
-        if (this.cause) {
-            stack += '\n' + this._causeToString(this.cause);
+        if (this._cause) {
+            stack += '\n' + this._causeToString(this._cause);
         }
 
+        return stack;
+    }
+
+    _prepareOwnStack() {
+        let stack = this._clearStack(this.stack);
         return [
             this._getErrorHeader(this),
             stack,

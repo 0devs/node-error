@@ -14,9 +14,9 @@ describe('Zerror', () => {
             expect(err.message).toEqual(null);
         });
 
-        it('cause=null', () => {
+        it('_cause=null', () => {
             const err = new Zerror();
-            expect(err.cause).toEqual(null);
+            expect(err._cause).toEqual(null);
         });
     });
 
@@ -44,11 +44,11 @@ describe('Zerror', () => {
     });
 
     describe('if pass second Error param without first params', () => {
-        it('should set only cause', () => {
+        it('should set only _cause', () => {
             const cause = new Error('test');
             const err = new Zerror(null, cause);
             expect(err.code).toEqual(null);
-            expect(err.cause).toEqual(cause);
+            expect(err._cause).toEqual(cause);
         });
     });
 
@@ -91,7 +91,7 @@ describe('Zerror', () => {
             expect(err.toString()).toMatch(/test message/);
         });
 
-        it('should contain cause error stack of cause instance of Zerror', () => {
+        it('should contain _cause error stack of _cause instance of Zerror', () => {
             const cause = new Zerror('ZCODE', 'zmessage');
             const err = new TestError('TEST_CODE', cause);
 
@@ -101,7 +101,7 @@ describe('Zerror', () => {
             expect(err.toString()).toMatch(/zmessage/);
         });
 
-        it('should contain cause error stack of cause instance of Error', () => {
+        it('should contain _cause error stack of _cause instance of Error', () => {
             const cause = new Error('some message');
             const err = new TestError('TEST_CODE', cause);
 
@@ -114,8 +114,8 @@ describe('Zerror', () => {
     // describe('test', () => {
     //     it('test', () => {
     //         const cause2 = new Zerror('DEEEEEP', 'deep code');
-    //         const cause = new Zerror('TEST_CODE', cause2);
-    //         const err = new Zerror('WHAAAA', cause);
+    //         const _cause = new Zerror('TEST_CODE', cause2);
+    //         const err = new Zerror('WHAAAA', _cause);
     //
     //
     //

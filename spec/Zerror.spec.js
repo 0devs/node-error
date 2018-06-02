@@ -2,6 +2,16 @@ const Zerror = require('../src/Zerror');
 
 class TestError extends Zerror {}
 
+TestError.setCodes({
+  TEST_CODE: 'this some test error message',
+});
+
+class AnotherTestError extends Zerror {}
+
+AnotherTestError.setCodes({
+  SOME_ANOTHER_TEST_CODE: 'some another test message'
+});
+
 describe('Zerror', () => {
   describe('by default', () => {
     it('code=null', () => {
@@ -20,18 +30,27 @@ describe('Zerror', () => {
     });
   });
 
-  describe('if pass first param', () => {
-    it('should set error code', () => {
-      const err = new Zerror('SOME_CODE');
-      expect(err.code).toEqual('SOME_CODE');
+  describe('if pass first param and it valid error code', () => {
+    it('should set error code and error message', () => {
+      const err = new TestError(TestError.CODES.TEST_CODE);
+      expect(err.code).toEqual('TEST_CODE');
+      expect(err.message).toEqual('this some test error message');
+    });
+  });
+
+  describe('if pass first param and it invalid error code', () => {
+    it('should set UNKNOWN_ERROR error code and error message', () => {
+      const err = new TestError('SOME_INVALID_CODE');
+      expect(err.code).toEqual('UNKNOWN_ERROR');
+      expect(err.message).toEqual('unknown error');
     });
   });
 
   describe('if pass second string param', () => {
     it('should set error code and message', () => {
-      const err = new Zerror('SOME_CODE', 'this is message');
-      expect(err.code).toEqual('SOME_CODE');
-      expect(err.message).toEqual('this is message');
+      const err = new TestError(TestError.CODES.TEST_CODE, 'this is another message');
+      expect(err.code).toEqual('TEST_CODE');
+      expect(err.message).toEqual('this is another message');
     });
   });
 
@@ -92,12 +111,16 @@ describe('Zerror', () => {
     });
 
     it('should contain _cause error stack of _cause instance of Zerror', () => {
-      const cause = new Zerror('ZCODE', 'zmessage');
+      const cause = new AnotherTestError(
+        AnotherTestError.CODES.SOME_ANOTHER_TEST_CODE,
+        'zmessage'
+      );
       const err = new TestError('TEST_CODE', cause);
 
+      expect(err.toString()).toMatch(/TestError/);
       expect(err.toString()).toMatch(/TEST_CODE/);
-      expect(err.toString()).toMatch(/Zerror/);
-      expect(err.toString()).toMatch(/ZCODE/);
+      expect(err.toString()).toMatch(/AnotherTestError/);
+      expect(err.toString()).toMatch(/SOME_ANOTHER_TEST_CODE/);
       expect(err.toString()).toMatch(/zmessage/);
     });
 

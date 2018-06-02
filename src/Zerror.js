@@ -1,4 +1,5 @@
 
+const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 
 class Zerror extends Error {
   constructor(code, causeOrMessage) {
@@ -6,7 +7,7 @@ class Zerror extends Error {
 
     this.isZerror = true;
 
-    this.CODES = Zerror.CODES;
+    this.CODES = this.constructor.CODES;
 
     this.code = null;
     this.message = null;
@@ -14,7 +15,16 @@ class Zerror extends Error {
     this._cause = null;
 
     if (code) {
-      this.code = code;
+      if (this.CODES[code]) {
+        this.code = code;
+      } else {
+        this.code = UNKNOWN_ERROR;
+        this.message = 'unknown error';
+      }
+
+      if (this.constructor._codeMessages[this.code]) {
+        this.message = this.constructor._codeMessages[this.code];
+      }
     }
 
     if (causeOrMessage instanceof Error) {
@@ -26,14 +36,6 @@ class Zerror extends Error {
     this.stack = this._prepareOwnStack();
   }
 
-  cause() {
-    if (this._cause) {
-      return this._causeToString(this._cause);
-    }
-
-    return this._cause;
-  }
-
   static is(err, code) {
     const instanceOfConstructor = err instanceof this;
 
@@ -42,6 +44,30 @@ class Zerror extends Error {
     }
 
     return instanceOfConstructor;
+  }
+
+  static setCodes(codes) {
+    this.CODES = this._prepareCodes(codes);
+    this._codeMessages = this._prepareCodeMessages(codes);
+  }
+
+  static _prepareCodes(codes) {
+    return Object.keys(codes).reduce(function (result, item) {
+      result[item] = item;
+      return result;
+    }, {});
+  }
+
+  static _prepareCodeMessages(codes) {
+    return codes;
+  }
+
+  cause() {
+    if (this._cause) {
+      return this._causeToString(this._cause);
+    }
+
+    return this._cause;
   }
 
   toString() {
@@ -108,5 +134,8 @@ Zerror.CODES = {
   UNKNOWN_ERROR: 'UNKNOWN_ERROR',
 };
 
+Zerror._codeMessages = {
+  UNKNOWN_ERROR: 'unknown error',
+};
 
 module.exports = Zerror;

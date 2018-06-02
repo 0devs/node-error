@@ -1,39 +1,96 @@
 
-const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
+function isObject(obj) {
+  return typeof obj === 'object' && obj != null;
+}
+
+function isString(str) {
+  return typeof str === 'string';
+}
 
 class Zerror extends Error {
-  constructor(code, causeOrMessage) {
+  constructor(codeOrOptions, causeOrMessage) {
     super();
-
     this.isZerror = true;
-
     this.CODES = this.constructor.CODES;
 
-    this.code = null;
-    this.message = null;
+    this.code = 'UNKNOWN_ERROR';
+    this.message = 'unknown error';
+    this.data = null;
 
     this._cause = null;
 
-    if (code) {
-      if (this.CODES[code]) {
-        this.code = code;
-      } else {
-        this.code = UNKNOWN_ERROR;
-        this.message = 'unknown error';
-      }
-
-      if (this.constructor._codeMessages[this.code]) {
-        this.message = this.constructor._codeMessages[this.code];
-      }
-    }
-
-    if (causeOrMessage instanceof Error) {
-      this._cause = causeOrMessage;
-    } else if (causeOrMessage != null) {
-      this.message = causeOrMessage;
-    }
+    this._processCode(codeOrOptions);
+    this._processMessage(codeOrOptions, causeOrMessage);
+    this._processCause(codeOrOptions, causeOrMessage);
+    this._processData(codeOrOptions);
+    this._processMessagePlaceholder();
 
     this.stack = this._prepareOwnStack();
+  }
+
+  _processCode(codeOrOptions) {
+    if (
+      isObject(codeOrOptions) && codeOrOptions.code &&
+      this.CODES && this.CODES[codeOrOptions.code]
+    ) {
+      this.code = codeOrOptions.code;
+    } else if (
+      isString(codeOrOptions) &&
+      this.CODES && this.CODES[codeOrOptions]
+    ) {
+      this.code = codeOrOptions;
+    }
+
+    if (this.constructor._codeMessages[this.code]) {
+      this.message = this.constructor._codeMessages[this.code];
+    }
+  }
+
+  _processMessage(codeOrOptions, causeOrMessage) {
+    if (isObject(codeOrOptions) && codeOrOptions.message) {
+      this.message = codeOrOptions.message;
+    }
+
+    if (isString(causeOrMessage)) {
+      this.message = causeOrMessage;
+    }
+  }
+
+  _processCause(codeOrOptions, causeOrMessage) {
+    if (isObject(codeOrOptions) && codeOrOptions.cause) {
+      this._cause = codeOrOptions.cause;
+    }
+
+    if (isObject(causeOrMessage)) {
+      this._cause = causeOrMessage;
+    }
+  }
+
+  _processData(codeOrOptions) {
+    if (isObject(codeOrOptions) && codeOrOptions.data) {
+      this.data = codeOrOptions.data;
+    }
+  }
+
+  _processMessagePlaceholder() {
+    if (isObject(this.data) && isString(this.message)) {
+      const regex = /%([a-zA-Z0-9_]+)%/g;
+
+      let match = regex.exec(this.message);
+
+      while (match !== null) {
+        const placeholder = match[1];
+
+        if (this.data[placeholder]) {
+          this.message = this.message.replace(
+            new RegExp(`%${placeholder}%`, 'g'),
+            this.data[placeholder],
+          );
+        }
+
+        match = regex.exec(this.message);
+      }
+    }
   }
 
   static is(err, code) {
@@ -52,7 +109,8 @@ class Zerror extends Error {
   }
 
   static _prepareCodes(codes) {
-    return Object.keys(codes).reduce(function (result, item) {
+    return Object.keys(codes).reduce((tmp, item) => {
+      const result = tmp;
       result[item] = item;
       return result;
     }, {});

@@ -1,111 +1,111 @@
-'use strict';
+
 
 class Zerror extends Error {
-    constructor(code, causeOrMessage) {
-        super();
+  constructor(code, causeOrMessage) {
+    super();
 
-        this.isZerror = true;
+    this.isZerror = true;
 
-        this.CODES = Zerror.CODES;
+    this.CODES = Zerror.CODES;
 
-        this.code = null;
-        this.message = null;
+    this.code = null;
+    this.message = null;
 
-        this._cause = null;
+    this._cause = null;
 
-        if (code) {
-            this.code = code;
-        }
-
-        if (causeOrMessage instanceof Error) {
-            this._cause = causeOrMessage;
-        } else if (causeOrMessage != null) {
-            this.message = causeOrMessage;
-        }
-
-        this.stack = this._prepareOwnStack();
+    if (code) {
+      this.code = code;
     }
 
-    cause() {
-        if (this._cause) {
-            return this._causeToString(this._cause);
-        }
-
-        return this._cause;
+    if (causeOrMessage instanceof Error) {
+      this._cause = causeOrMessage;
+    } else if (causeOrMessage != null) {
+      this.message = causeOrMessage;
     }
 
-    static is(err, code) {
-        const instanceOfConstructor = err instanceof this;
+    this.stack = this._prepareOwnStack();
+  }
 
-        if (code) {
-            return err.code === code;
-        }
-
-        return instanceOfConstructor;
+  cause() {
+    if (this._cause) {
+      return this._causeToString(this._cause);
     }
 
-    toString() {
-        let stack = this.stack;
+    return this._cause;
+  }
 
-        if (this._cause) {
-            stack += '\n' + this._causeToString(this._cause);
-        }
+  static is(err, code) {
+    const instanceOfConstructor = err instanceof this;
 
-        return stack;
+    if (code) {
+      return err.code === code;
     }
 
-    _prepareOwnStack() {
-        let stack = this._clearStack(this.stack);
-        return [
-            this._getErrorHeader(this),
-            stack,
-        ].join('');
+    return instanceOfConstructor;
+  }
+
+  toString() {
+    let stack = this.stack;
+
+    if (this._cause) {
+      stack += `\n${this._causeToString(this._cause)}`;
     }
 
-    _clearStack(stack) {
-        if (typeof stack === 'string') {
-            return stack.split('\n').slice(1).join('\n');
-        }
+    return stack;
+  }
 
-        return stack;
+  _prepareOwnStack() {
+    const stack = this._clearStack(this.stack);
+    return [
+      this._getErrorHeader(this),
+      stack,
+    ].join('');
+  }
+
+  _clearStack(stack) {
+    if (typeof stack === 'string') {
+      return stack.split('\n').slice(1).join('\n');
     }
 
-    _indentString(stack) {
-        if (typeof stack === 'string') {
-            return stack.split('\n').map(str => '    ' + str).join('\n');
-        }
+    return stack;
+  }
 
-        return stack;
+  _indentString(stack) {
+    if (typeof stack === 'string') {
+      return stack.split('\n').map(str => `    ${str}`).join('\n');
     }
 
-    _getErrorHeader(error) {
-        const header = [
-            error.constructor.name, ': ',
-            error.code, '\n',
-        ];
+    return stack;
+  }
 
-        if (error.message) {
-            header.push(error.message, '\n');
-        }
+  _getErrorHeader(error) {
+    const header = [
+      error.constructor.name, ': ',
+      error.code, '\n',
+    ];
 
-        return header.join('')
+    if (error.message) {
+      header.push(error.message, '\n');
     }
 
-    _causeToString(cause) {
-        let str = null;
+    return header.join('');
+  }
 
-        if (cause.isZerror) {
-            str = this._indentString(cause.toString());
-        } else {
-            str = this._indentString(cause.stack);
-        }
+  _causeToString(cause) {
+    let str = null;
 
-        return '\n' + str;
+    if (cause.isZerror) {
+      str = this._indentString(cause.toString());
+    } else {
+      str = this._indentString(cause.stack);
     }
+
+    return `\n${str}`;
+  }
 }
 
 Zerror.CODES = {
-    UNKNOWN_ERROR: 'UNKNOWN_ERROR'
+  UNKNOWN_ERROR: 'UNKNOWN_ERROR',
 };
 
 

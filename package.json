@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "test": "jest",
-    "lint": "eslint src/ spec/"
+    "lint": "eslint src/ spec/",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",

@@ -30,13 +30,16 @@ class Zerror extends Error {
 
   _processCode(codeOrOptions) {
     if (
-      isObject(codeOrOptions) && codeOrOptions.code &&
-      this.CODES && this.CODES[codeOrOptions.code]
+      isObject(codeOrOptions)
+      && codeOrOptions.code
+      && this.CODES
+      && this.CODES[codeOrOptions.code]
     ) {
       this.code = codeOrOptions.code;
     } else if (
-      isString(codeOrOptions) &&
-      this.CODES && this.CODES[codeOrOptions]
+      isString(codeOrOptions)
+      && this.CODES
+      && this.CODES[codeOrOptions]
     ) {
       this.code = codeOrOptions;
     }
@@ -129,7 +132,7 @@ class Zerror extends Error {
   }
 
   toString() {
-    let stack = this.stack;
+    let { stack } = this;
 
     if (this._cause) {
       stack += `\n${this._causeToString(this._cause)}`;

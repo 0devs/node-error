@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/Zerror.js",
   "files": [
-    "src"
+    "lib"
   ],
   "scripts": {
     "test": "p-jest",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/0devs/node-error#readme",
   "devDependencies": {
-    "@0devs/package": "^0.3.0",
+    "@0devs/package": "^0.4.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-preset-env": "^1.7.0"
   }

@@ -1,4 +1,4 @@
-const Zerror = require('../src/Zerror');
+import Zerror from '../src/Zerror';
 
 class TestError extends Zerror {}
 

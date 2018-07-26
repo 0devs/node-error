@@ -1,0 +1,11 @@
+{
+  "extends": "./node_modules/@0devs/package/config/.babelrc",
+  "plugins": [
+    [
+      "babel-plugin-transform-builtin-extend", 
+      {
+        "globals": ["Error"]
+      }
+    ]
+  ]
+}

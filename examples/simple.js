@@ -1,4 +1,4 @@
-const Zerror = require('../src/Zerror');
+const Zerror = require('../lib/Zerror').default;
 
 class FsError extends Zerror {}
 

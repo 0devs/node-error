@@ -196,4 +196,4 @@ Zerror._codeMessages = {
   UNKNOWN_ERROR: 'unknown error',
 };
 
-module.exports = Zerror;
+export default Zerror;

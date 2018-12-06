@@ -16,7 +16,8 @@
     "ts": "p-typescript --watch",
     "ts-trace": "p-typescript --traceResolution",
     "postversion": "git push && git push --tags",
-    "ci": "npm run lint && npm test"
+    "ci": "npm run lint && npm test",
+    "prepublish": "npm run clean && npm run lint && npm test && npm run build"
   },
   "repository": {
     "type": "git",

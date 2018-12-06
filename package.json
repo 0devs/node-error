@@ -1,6 +1,6 @@
 {
   "name": "@0devs/error",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "",
   "main": "lib/Zerror.js",
   "types": "lib/Zerror.d.ts",

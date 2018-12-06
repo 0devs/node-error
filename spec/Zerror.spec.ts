@@ -8,12 +8,14 @@ TestError.setCodes({
   TEST_CODE_WITH_PLACEHOLDERS: "message id=%id%, type=%type%",
 });
 
+// tslint:disable-next-line max-classes-per-file
 class AnotherTestError extends Zerror {}
 
 AnotherTestError.setCodes({
   SOME_ANOTHER_TEST_CODE: "some another test message",
 });
 
+// tslint:disable-next-line no-big-function
 describe("Zerror", () => {
   describe("by default", () => {
     it("code=UNKNOWN_ERROR", () => {

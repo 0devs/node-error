@@ -2,6 +2,8 @@
 
 javascript errors with codes and causes
 
+- !!! currently not extends Error and `instanceof Error` should be false - problems in typescript (extend from 
+builtins)
 
 ## install
 

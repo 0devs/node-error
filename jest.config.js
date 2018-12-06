@@ -1,10 +1,26 @@
-const config = require('@0devs/package/config/jest.config');
+module.exports = require('@0devs/package/config/jest.config');
 
-// FIXME jest fails if true
-config.collectCoverage = false;
+module.exports.collectCoverage = false;
 
-config.transform = {
-    "^.+\\.jsx?$": "<rootDir>/jest.preprocessor.js"
+module.exports.collectCoverageFrom = ['src/**/*.ts'];
+
+module.exports.moduleFileExtensions = [
+  'ts',
+  'tsx',
+  'js',
+];
+
+module.exports.globals = {
+  'ts-jest': {
+    tsConfig: 'tsconfig.json',
+    diagnostic: false,
+  },
 };
 
-module.exports = config;
+module.exports.testMatch = [
+  '**/spec/**/*.spec.ts',
+];
+
+module.exports.transform = {
+  '^.+\\.(ts|tsx)$': 'ts-jest',
+};

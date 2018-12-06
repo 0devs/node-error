@@ -21,7 +21,7 @@ const err = new ApiError({
     id: 100500,
     type: 'test',
   },
-  cause: cause,
+  cause,
 });
 
 console.log(err.message);

@@ -55,13 +55,14 @@ describe("Zerror", () => {
     });
 
     // TODO extends from error, typescript extends can't correctly extends from builtins
-    // it("instanceof Error", () => {
-    //   const err = new Zerror();
-    //   expect(err).toBeInstanceOf(Error);
+    it("instanceof Error", () => {
+      const err = new Zerror();
+      expect(err).toBeInstanceOf(Error);
 
-    //   const testError = new TestError();
-    //   expect(err).toBeInstanceOf(Error);
-    // });
+      const testError = new TestError();
+      expect(testError).toBeInstanceOf(Zerror);
+      expect(testError).toBeInstanceOf(Error);
+    });
   });
 
   describe("if pass first string param with valid code", () => {

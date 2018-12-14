@@ -41,7 +41,7 @@ type CodeOrOptions = IZerrorOptions | string | null;
 type CauseOrMessage = Zerror | Error | string;
 
 // TODO extends from error, typescript extends can't correctly extends from builtins
-class Zerror {
+class Zerror extends Error {
   public static CODES: IZerrorCodes = {
     UNKNOWN_ERROR: "UNKNOWN_ERROR",
   };
@@ -93,7 +93,17 @@ class Zerror {
 
   // TODO any
   constructor(codeOrOptions?: CodeOrOptions, causeOrMessage?: CauseOrMessage) {
-    // super();
+    super();
+
+    const actualProto = new.target.prototype;
+
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(this, actualProto);
+    } else {
+      // @ts-ignore
+      this.__proto__ = actualProto;
+    }
+
     // TODO Error.captureStackTrace
     this.isZerror = true;
 

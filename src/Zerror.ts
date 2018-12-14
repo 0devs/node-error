@@ -1,11 +1,11 @@
-interface IZerrorOptions {
+export interface IZerrorOptions {
   code?: string;
   message?: string;
   cause?: Zerror | Error;
   data?: IZerrorData;
 }
 
-interface IZerrorData {
+export interface IZerrorData {
   [index: string]: string;
 }
 
@@ -37,8 +37,8 @@ function isZerror(err: any): err is Zerror {
   return err && err.isZerror === true;
 }
 
-type CodeOrOptions = IZerrorOptions | string | null;
-type CauseOrMessage = Zerror | Error | string;
+export type CodeOrOptions = IZerrorOptions | string | null;
+export type CauseOrMessage = Zerror | Error | string;
 
 // TODO extends from error, typescript extends can't correctly extends from builtins
 class Zerror extends Error {

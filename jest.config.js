@@ -13,7 +13,7 @@ module.exports.moduleFileExtensions = [
 module.exports.globals = {
   'ts-jest': {
     tsConfig: 'tsconfig.json',
-    diagnostic: false,
+    diagnostics: false,
   },
 };
 

@@ -5,8 +5,8 @@ export interface IZerrorOptions {
   data?: IZerrorData;
 }
 
-export interface IZerrorData {
-  [index: string]: string;
+declare interface IZerrorData {
+  [index: string]: any;
 }
 
 interface IZerrorCodes {
@@ -20,6 +20,11 @@ interface IZerrorConstructor {
 }
 
 function isZerrorOptions(obj: any): obj is IZerrorOptions {
+  // TODO check
+  return typeof obj === "object" && obj != null;
+}
+
+function isZerrorData(obj: any): obj is IZerrorData {
   // TODO check
   return typeof obj === "object" && obj != null;
 }
@@ -40,7 +45,6 @@ function isZerror(err: any): err is Zerror {
 export type CodeOrOptions = IZerrorOptions | string | null;
 export type CauseOrMessage = Zerror | Error | string;
 
-// TODO extends from error, typescript extends can't correctly extends from builtins
 class Zerror extends Error {
   public static CODES: IZerrorCodes = {
     UNKNOWN_ERROR: "UNKNOWN_ERROR",
@@ -179,11 +183,9 @@ class Zerror extends Error {
   }
 
   public _processMessagePlaceholder() {
-    if (isZerrorOptions(this.data) && isString(this.message)) {
+    if (isZerrorData(this.data) && isString(this.message)) {
       const regex = /%([a-zA-Z0-9_]+)%/g;
-
       let match = regex.exec(this.message);
-
       while (match !== null) {
         const placeholder = match[1];
 
@@ -193,7 +195,6 @@ class Zerror extends Error {
             this.data[placeholder],
           );
         }
-
         match = regex.exec(this.message);
       }
     }

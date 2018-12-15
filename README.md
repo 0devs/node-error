@@ -20,7 +20,7 @@ const Zerror = require('@0devs/error');
 class MyError extends Zerror {}
 
 MyError.CODES = {
-    BAD_REQUEST: 'BAD_REQUEST',
+    BAD_REQUEST: 'bad request',
 };
 
 const causeErr = new Error('shit happens');

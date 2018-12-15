@@ -10,7 +10,8 @@
       "object-literal-sort-keys": [false],
       "ordered-imports": [false],
       "no-console": [false],
-      "no-duplicate-string": [false]
+      "no-duplicate-string": [false],
+      "no-commented-code": [false]
     },
     "rulesDirectory": []
 }

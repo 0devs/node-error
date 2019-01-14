@@ -30,6 +30,6 @@
   },
   "homepage": "https://github.com/0devs/node-error#readme",
   "devDependencies": {
-    "@0devs/package": "^0.9.2"
+    "@0devs/package": "^0.10.0"
   }
 }

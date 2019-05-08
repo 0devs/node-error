@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/0devs/node-error#readme",
   "devDependencies": {
-    "@0devs/package": "^0.10.0"
+    "@0devs/package": "^0.13.0",
+    "@types/jest": "^24.0.12"
   }
 }

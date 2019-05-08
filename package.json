@@ -1,7 +1,8 @@
 {
   "name": "@0devs/error",
   "version": "1.2.0",
-  "description": "",
+  "description": "custom typescript and javascript errors with codes and causes for node and browsers",
+  "keywords": ["error"],
   "main": "lib/Zerror.js",
   "types": "lib/Zerror.d.ts",
   "files": [
@@ -23,7 +24,7 @@
     "type": "git",
     "url": "git+https://github.com/0devs/node-error.git"
   },
-  "author": "",
+  "author": "alekzonder <alekzonder@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/0devs/node-error/issues"

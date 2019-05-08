@@ -1,8 +1,8 @@
 module.exports = require('@0devs/package/config/jest.config');
 
-module.exports.collectCoverage = false;
+module.exports.collectCoverage = true;
 
-module.exports.collectCoverageFrom = ['src/**/*.ts'];
+module.exports.collectCoverageFrom = ['src/Zerror.ts'];
 
 module.exports.moduleFileExtensions = [
   'ts',

@@ -54,7 +54,6 @@ describe("Zerror", () => {
       expect(testError).toBeInstanceOf(Zerror);
     });
 
-    // TODO extends from error, typescript extends can't correctly extends from builtins
     it("instanceof Error", () => {
       const err = new Zerror();
       expect(err).toBeInstanceOf(Error);

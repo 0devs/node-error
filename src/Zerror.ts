@@ -209,6 +209,9 @@ class Zerror extends Error {
   }
 
   public toString() {
+    // @ts-ignore
+    // this._processMessagePlaceholder();
+
     let stack = this.stack ? this.stack : "";
 
     if (this._cause) {

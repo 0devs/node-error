@@ -32,6 +32,9 @@
     "url": "https://github.com/0devs/node-error/issues"
   },
   "homepage": "https://github.com/0devs/node-error#readme",
+  "engines": {
+    "node": ">=8"
+  },
   "devDependencies": {
     "@0devs/package": "^0.17.0",
     "@types/jest": "^24.0.23",

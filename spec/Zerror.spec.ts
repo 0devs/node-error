@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file, sonarjs/no-duplicate-string */
 import Zerror from '../src/Zerror';
 
 class TestError extends Zerror {}

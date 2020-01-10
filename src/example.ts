@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import Zerror from './Zerror';
 
 class MyError extends Zerror {

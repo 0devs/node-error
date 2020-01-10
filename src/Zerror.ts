@@ -50,7 +50,7 @@ class Zerror extends Error {
     UNKNOWN_ERROR: 'UNKNOWN_ERROR',
   };
 
-  public static is(err: Zerror | Error, code?: string) {
+  public static is(err: Zerror | Error, code?: string): boolean {
     const instanceOfConstructor = err instanceof this;
 
     if (err instanceof Zerror && code) {
@@ -60,7 +60,7 @@ class Zerror extends Error {
     return instanceOfConstructor;
   }
 
-  public static setCodes(codes: IZerrorCodes) {
+  public static setCodes(codes: IZerrorCodes): void {
     // @ts-ignore
     this.CODES = this._prepareCodes(codes);
     this.prototype.CODES = this.CODES;
@@ -68,7 +68,7 @@ class Zerror extends Error {
     this._codeMessages = this._prepareCodeMessages(codes);
   }
 
-  public static _prepareCodes(codes: IZerrorCodes) {
+  public static _prepareCodes(codes: IZerrorCodes): object {
     return Object.keys(codes).reduce((tmp: {[index: string]: string}, item: string) => {
       const result = tmp;
       result[item] = item;
@@ -76,7 +76,7 @@ class Zerror extends Error {
     }, {});
   }
 
-  public static _prepareCodeMessages(codes: IZerrorCodes) {
+  public static _prepareCodeMessages(codes: IZerrorCodes): object {
     return codes;
   }
 
@@ -142,7 +142,7 @@ class Zerror extends Error {
     this.stack = this._prepareOwnStack();
   }
 
-  public _processCode(codeOrOptions?: CodeOrOptions) {
+  public _processCode(codeOrOptions?: CodeOrOptions): void {
     if (
       isZerrorOptions(codeOrOptions)
       && codeOrOptions.code
@@ -163,7 +163,7 @@ class Zerror extends Error {
     }
   }
 
-  public _processMessage(codeOrOptions?: CodeOrOptions, causeOrMessage?: CauseOrMessage) {
+  public _processMessage(codeOrOptions?: CodeOrOptions, causeOrMessage?: CauseOrMessage): void {
     if (isZerrorOptions(codeOrOptions) && codeOrOptions.message) {
       this.message = codeOrOptions.message;
     }
@@ -173,7 +173,7 @@ class Zerror extends Error {
     }
   }
 
-  public _processCause(codeOrOptions?: CodeOrOptions, causeOrMessage?: CauseOrMessage) {
+  public _processCause(codeOrOptions?: CodeOrOptions, causeOrMessage?: CauseOrMessage): void {
     if (isZerrorOptions(codeOrOptions) && codeOrOptions.cause) {
       this._cause = codeOrOptions.cause;
     }
@@ -183,13 +183,13 @@ class Zerror extends Error {
     }
   }
 
-  public _processData(codeOrOptions?: CodeOrOptions) {
+  public _processData(codeOrOptions?: CodeOrOptions): void {
     if (isZerrorOptions(codeOrOptions) && codeOrOptions.data) {
       this.data = codeOrOptions.data;
     }
   }
 
-  public _processMessagePlaceholder() {
+  public _processMessagePlaceholder(): void {
     if (isZerrorData(this.data) && isString(this.message)) {
       const regex = /%([a-zA-Z0-9_]+)%/g;
       let match = regex.exec(this.message);
@@ -207,7 +207,7 @@ class Zerror extends Error {
     }
   }
 
-  public cause() {
+  public cause(): string | null {
     if (this._cause) {
       return this._causeToString(this._cause);
     }
@@ -215,7 +215,7 @@ class Zerror extends Error {
     return this._cause;
   }
 
-  public toString() {
+  public toString(): string {
     // @ts-ignore
     // this._processMessagePlaceholder();
 
@@ -228,7 +228,7 @@ class Zerror extends Error {
     return stack;
   }
 
-  public _prepareOwnStack() {
+  public _prepareOwnStack(): string {
     const stack = this.stack ? this._clearStack(this.stack) : '';
 
     return [
@@ -237,7 +237,7 @@ class Zerror extends Error {
     ].join('');
   }
 
-  public _clearStack(stack: string) {
+  public _clearStack(stack: string): string {
     if (typeof stack === 'string') {
       return stack.split('\n').slice(1).join('\n');
     }
@@ -245,7 +245,7 @@ class Zerror extends Error {
     return stack;
   }
 
-  public _indentString(stack: string) {
+  public _indentString(stack: string): string {
     if (typeof stack === 'string') {
       return stack.split('\n').map((str) => `    ${str}`).join('\n');
     }
@@ -253,7 +253,7 @@ class Zerror extends Error {
     return stack;
   }
 
-  public _getErrorHeader(error: Zerror | Error) {
+  public _getErrorHeader(error: Zerror | Error): string {
     const header = [
       error.constructor.name, ': ',
       // @ts-ignore check
@@ -268,7 +268,7 @@ class Zerror extends Error {
     return header.join('');
   }
 
-  public _causeToString(cause: Zerror | Error) {
+  public _causeToString(cause: Zerror | Error): string {
     let str = null;
 
     if (isZerror(cause)) {

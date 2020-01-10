@@ -3,6 +3,7 @@ module.exports = {
         './node_modules/@0devs/package/config/eslint-ts.js',
     ],
     rules: {
+        'import/extensions': 'off',
         'import/no-unresolved': 'off',
         'implicit-arrow-linebreak': ['off'],
         'import/prefer-default-export': ['off'],

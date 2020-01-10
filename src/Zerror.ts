@@ -21,21 +21,21 @@ interface IZerrorConstructor {
 
 function isZerrorOptions(obj: any): obj is IZerrorOptions {
   // TODO check
-  return typeof obj === "object" && obj != null;
+  return typeof obj === 'object' && obj != null;
 }
 
 function isZerrorData(obj: any): obj is IZerrorData {
   // TODO check
-  return typeof obj === "object" && obj != null;
+  return typeof obj === 'object' && obj != null;
 }
 
 function isString(str: any): str is string {
-  return typeof str === "string";
+  return typeof str === 'string';
 }
 
 function isCause(obj: any): obj is Error {
   // TODO check
-  return typeof obj === "object" && obj != null;
+  return typeof obj === 'object' && obj != null;
 }
 
 function isZerror(err: any): err is Zerror {
@@ -47,7 +47,7 @@ export type CauseOrMessage = Zerror | Error | string;
 
 class Zerror extends Error {
   public static CODES: IZerrorCodes = {
-    UNKNOWN_ERROR: "UNKNOWN_ERROR",
+    UNKNOWN_ERROR: 'UNKNOWN_ERROR',
   };
 
   public static is(err: Zerror | Error, code?: string) {
@@ -79,18 +79,23 @@ class Zerror extends Error {
   public static _prepareCodeMessages(codes: IZerrorCodes) {
     return codes;
   }
+
   private static _codeMessages: IZerrorCodes = {
-    UNKNOWN_ERROR: "unknown error",
+    UNKNOWN_ERROR: 'unknown error',
   };
 
   public CODES: IZerrorCodes = {
-    UNKNOWN_ERROR: "UNKNOWN_ERROR",
+    UNKNOWN_ERROR: 'UNKNOWN_ERROR',
   };
 
   public isZerror: boolean;
+
   public message: string;
+
   public stack?: string;
+
   public code: string;
+
   public data: IZerrorData | null;
 
   private _cause: Zerror | Error | null;
@@ -104,8 +109,10 @@ class Zerror extends Error {
     if (Object.setPrototypeOf) {
       Object.setPrototypeOf(this, actualProto);
     } else {
+      /* eslint-disable no-proto */
       // @ts-ignore
       this.__proto__ = actualProto;
+      /* eslint-enable no-proto */
     }
 
     // TODO Error.captureStackTrace
@@ -120,8 +127,8 @@ class Zerror extends Error {
     }
 
     this.CODES = (this.constructor as IZerrorConstructor).CODES;
-    this.code = "UNKNOWN_ERROR";
-    this.message = "unknown error";
+    this.code = 'UNKNOWN_ERROR';
+    this.message = 'unknown error';
     this.data = null;
 
     this._cause = null;
@@ -191,7 +198,7 @@ class Zerror extends Error {
 
         if (this.data[placeholder]) {
           this.message = this.message.replace(
-            new RegExp(`%${placeholder}%`, "g"),
+            new RegExp(`%${placeholder}%`, 'g'),
             this.data[placeholder],
           );
         }
@@ -212,7 +219,7 @@ class Zerror extends Error {
     // @ts-ignore
     // this._processMessagePlaceholder();
 
-    let stack = this.stack ? this.stack : "";
+    let stack = this.stack ? this.stack : '';
 
     if (this._cause) {
       stack += `\n${this._causeToString(this._cause)}`;
@@ -222,25 +229,25 @@ class Zerror extends Error {
   }
 
   public _prepareOwnStack() {
-    const stack = this.stack ? this._clearStack(this.stack) : "";
+    const stack = this.stack ? this._clearStack(this.stack) : '';
 
     return [
       this._getErrorHeader(this),
       stack,
-    ].join("");
+    ].join('');
   }
 
   public _clearStack(stack: string) {
-    if (typeof stack === "string") {
-      return stack.split("\n").slice(1).join("\n");
+    if (typeof stack === 'string') {
+      return stack.split('\n').slice(1).join('\n');
     }
 
     return stack;
   }
 
   public _indentString(stack: string) {
-    if (typeof stack === "string") {
-      return stack.split("\n").map((str) => `    ${str}`).join("\n");
+    if (typeof stack === 'string') {
+      return stack.split('\n').map((str) => `    ${str}`).join('\n');
     }
 
     return stack;
@@ -248,17 +255,17 @@ class Zerror extends Error {
 
   public _getErrorHeader(error: Zerror | Error) {
     const header = [
-      error.constructor.name, ": ",
+      error.constructor.name, ': ',
       // @ts-ignore check
       error.code,
-      "\n",
+      '\n',
     ];
 
     if (error.message) {
-      header.push(error.message, "\n");
+      header.push(error.message, '\n');
     }
 
-    return header.join("");
+    return header.join('');
   }
 
   public _causeToString(cause: Zerror | Error) {
@@ -267,7 +274,7 @@ class Zerror extends Error {
     if (isZerror(cause)) {
       str = this._indentString(cause.toString());
     } else {
-      str = this._indentString(cause.stack ? cause.stack : "");
+      str = this._indentString(cause.stack ? cause.stack : '');
     }
 
     return `\n${str}`;

@@ -1,8 +1,8 @@
-import Zerror from "./Zerror";
+import Zerror from './Zerror';
 
 class MyError extends Zerror {
   public static CODES = {
-    BAD_REQUEST: "bad request: %status%",
+    BAD_REQUEST: 'bad request: %status%',
   };
 }
 
@@ -17,11 +17,11 @@ let e = new MyError(MyError.CODES.BAD_REQUEST);
 // @ts-ignore
 console.log(e.toString());
 
-e = new MyError(MyError.CODES.BAD_REQUEST, "really bad request");
+e = new MyError(MyError.CODES.BAD_REQUEST, 'really bad request');
 // @ts-ignore
 console.log(e.toString());
 
-e = new MyError(MyError.CODES.BAD_REQUEST, new Error("shit happens"));
+e = new MyError(MyError.CODES.BAD_REQUEST, new Error('shit happens'));
 // @ts-ignore
 console.log(e.toString());
 
@@ -30,8 +30,8 @@ console.log(e.toString());
 // @ts-ignore
 console.log(new MyError({
   code: MyError.CODES.BAD_REQUEST,
-  message: "really bad request",
-  cause: new Error("shit happens"),
+  message: 'really bad request',
+  cause: new Error('shit happens'),
 }).toString());
 
 // @ts-ignore
@@ -45,9 +45,9 @@ console.log(new MyError({
 // @ts-ignore
 console.log(new MyError({
   code: MyError.CODES.BAD_REQUEST,
-  message: "shit happens on %method% with status: %status%",
+  message: 'shit happens on %method% with status: %status%',
   data: {
-    method: "GET",
+    method: 'GET',
     status: 500,
   },
 }).toString());

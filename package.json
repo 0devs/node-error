@@ -8,7 +8,7 @@
   "main": "dist/Zerror.js",
   "types": "dist/Zerror.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "scripts": {
     "test": "jest",

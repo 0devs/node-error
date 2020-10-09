@@ -5,15 +5,15 @@
   "keywords": [
     "error"
   ],
-  "main": "lib/Zerror.js",
-  "types": "lib/Zerror.d.ts",
+  "main": "dist/Zerror.js",
+  "types": "dist/Zerror.d.ts",
   "files": [
     "lib"
   ],
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "clean": "rm -rf lib coverage npm-debug.log",
+    "clean": "rm -rf lib dist coverage npm-debug.log",
     "build": "tsc",
     "lint": "eslint --ext .js,.ts ./src ./spec",
     "ts": "tsc --watch",
@@ -37,18 +37,18 @@
   },
   "devDependencies": {
     "@0devs/package": "^0.18.1",
-    "@types/jest": "^25.2.1",
-    "@types/node": "^13.11.1",
-    "@typescript-eslint/eslint-plugin": "^2.28.0",
-    "@typescript-eslint/parser": "^2.28.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^23.8.2",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.7",
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/parser": "^4.4.0",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-sonarjs": "^0.5.0",
-    "jest": "^25.3.0",
-    "ts-jest": "^25.4.0",
-    "typescript": "^3.8.3"
+    "jest": "^26.5.2",
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3"
   }
 }

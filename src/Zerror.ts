@@ -1,12 +1,13 @@
+declare interface IZerrorData {
+  [index: string]: any;
+}
+
 export interface IZerrorOptions {
   code?: string;
   message?: string;
+  // eslint-disable-next-line no-use-before-define
   cause?: Zerror | Error;
   data?: IZerrorData;
-}
-
-declare interface IZerrorData {
-  [index: string]: any;
 }
 
 interface IZerrorCodes {
@@ -38,11 +39,15 @@ function isCause(obj: any): obj is Error {
   return typeof obj === 'object' && obj != null;
 }
 
+// eslint-disable-next-line no-use-before-define
 function isZerror(err: any): err is Zerror {
   return err && err.isZerror === true;
 }
 
+// eslint-disable-next-line no-use-before-define
 export type CodeOrOptions = IZerrorOptions | string | null;
+
+// eslint-disable-next-line no-use-before-define
 export type CauseOrMessage = Zerror | Error | string;
 
 class Zerror extends Error {
@@ -61,14 +66,12 @@ class Zerror extends Error {
   }
 
   public static setCodes(codes: IZerrorCodes): void {
-    // @ts-ignore
     this.CODES = this._prepareCodes(codes);
     this.prototype.CODES = this.CODES;
-    // @ts-ignore
     this._codeMessages = this._prepareCodeMessages(codes);
   }
 
-  public static _prepareCodes(codes: IZerrorCodes): object {
+  public static _prepareCodes(codes: IZerrorCodes): {[index: string]: string} {
     return Object.keys(codes).reduce((tmp: {[index: string]: string}, item: string) => {
       const result = tmp;
       result[item] = item;
@@ -76,7 +79,7 @@ class Zerror extends Error {
     }, {});
   }
 
-  public static _prepareCodeMessages(codes: IZerrorCodes): object {
+  public static _prepareCodeMessages(codes: IZerrorCodes): {[index: string]: string} {
     return codes;
   }
 
@@ -109,7 +112,7 @@ class Zerror extends Error {
     if (Object.setPrototypeOf) {
       Object.setPrototypeOf(this, actualProto);
     } else {
-      /* eslint-disable no-proto */
+      /* eslint-disable no-proto, @typescript-eslint/ban-ts-comment */
       // @ts-ignore
       this.__proto__ = actualProto;
       /* eslint-enable no-proto */
@@ -118,8 +121,10 @@ class Zerror extends Error {
     // TODO Error.captureStackTrace
     this.isZerror = true;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (Error.captureStackTrace) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       Error.captureStackTrace(this, this.constructor);
     } else {
@@ -216,7 +221,6 @@ class Zerror extends Error {
   }
 
   public toString(): string {
-    // @ts-ignore
     // this._processMessagePlaceholder();
 
     let stack = this.stack ? this.stack : '';
@@ -256,7 +260,8 @@ class Zerror extends Error {
   public _getErrorHeader(error: Zerror | Error): string {
     const header = [
       error.constructor.name, ': ',
-      // @ts-ignore check
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       error.code,
       '\n',
     ];
@@ -281,7 +286,6 @@ class Zerror extends Error {
   }
 }
 
-// @ts-ignore
 // Zerror.__proto__ = Error.prototype;
 
 export default Zerror;

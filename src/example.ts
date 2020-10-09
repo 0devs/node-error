@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, @typescript-eslint/ban-ts-comment */
 
 import Zerror from './Zerror';
 

@@ -8,5 +8,6 @@ module.exports = {
         'implicit-arrow-linebreak': ['off'],
         'import/prefer-default-export': ['off'],
         '@typescript-eslint/ban-ts-ignore': ['off'],
+        '@typescript-eslint/interface-name-prefix': ['off']
     }
 }

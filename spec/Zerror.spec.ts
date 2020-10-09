@@ -16,7 +16,6 @@ AnotherTestError.setCodes({
   SOME_ANOTHER_TEST_CODE: 'some another test message',
 });
 
-// tslint:disable-next-line no-big-function
 describe('Zerror', () => {
   describe('by default', () => {
     it('code=UNKNOWN_ERROR', () => {
@@ -36,6 +35,7 @@ describe('Zerror', () => {
 
     it('_cause=null', () => {
       const err = new Zerror();
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(err._cause).toEqual(null);
     });
@@ -163,6 +163,7 @@ describe('Zerror', () => {
       expect(err.code).toEqual('TEST_CODE');
       expect(err.message).toEqual('test message');
       expect(err.data).toEqual({ id: '100500' });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(err._cause).toEqual(cause);
     });
@@ -227,6 +228,7 @@ describe('Zerror', () => {
       const cause = new Error('test');
       const err = new Zerror(null, cause);
       expect(err.code).toEqual('UNKNOWN_ERROR');
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(err._cause).toEqual(cause);
     });

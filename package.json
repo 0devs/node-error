@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/0devs/node-error#readme",
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "devDependencies": {
     "@0devs/package": "^0.18.1",

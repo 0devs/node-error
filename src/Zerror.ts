@@ -1,4 +1,5 @@
 declare interface IZerrorData {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [index: string]: any;
 }
 
@@ -20,26 +21,30 @@ interface IZerrorConstructor {
   _codeMessages: IZerrorCodes;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isZerrorOptions(obj: any): obj is IZerrorOptions {
   // TODO check
   return typeof obj === 'object' && obj != null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isZerrorData(obj: any): obj is IZerrorData {
   // TODO check
   return typeof obj === 'object' && obj != null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isString(str: any): str is string {
   return typeof str === 'string';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isCause(obj: any): obj is Error {
   // TODO check
   return typeof obj === 'object' && obj != null;
 }
 
-// eslint-disable-next-line no-use-before-define
+// eslint-disable-next-line no-use-before-define,@typescript-eslint/no-explicit-any
 function isZerror(err: any): err is Zerror {
   return err && err.isZerror === true;
 }

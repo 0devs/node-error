@@ -1,6 +1,6 @@
 {
   "name": "@0devs/error",
-  "version": "1.6.1-0",
+  "version": "1.7.0",
   "description": "custom typescript and javascript errors with codes and causes for node and browsers",
   "keywords": [
     "error"

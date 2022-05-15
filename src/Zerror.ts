@@ -106,6 +106,7 @@ class Zerror extends Error {
 
   public data: IZerrorData | null;
 
+  // eslint-disable-next-line no-use-before-define
   private _cause: Zerror | Error | null;
 
   // TODO any
